@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title>Share electric car</title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="1504">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <style>
+      #map {
+          height: 500px;
+          width: 100%; 
+      }
+
+      html, body {
+          height:100%;
+          margin: 0;
+          padding: 0;
+      }
+  </style>
+</head>
+<body>
+  <div id="react-application">
+  </div>
+  <script src="./sharecar.js"></script>
+  <script>
+      function showMap() {
+          var pos = {lat: 52.255, lng: 10.373 };
+          var map = new google.maps.Map(document.getElementById("map"), {
+              center: pos,
+	      zoom: 14 
+          });
+
+          var marker = new google.maps.Marker({
+              position: pos,
+              map: map
+          });
+      }
+
+      function apiInitialized() {
+          var content = document.getElementById("map");
+          if (content != null) {
+              content.setAttribute("apiReady","true");
+              showMap();
+          }
+      }
+  </script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhaobI6vImnVVO4BksSOHkQJfcDynhuzs&callback=apiInitialized">
+  </script>"
+</body>
+</html>
