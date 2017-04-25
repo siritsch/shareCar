@@ -21768,7 +21768,7 @@ var Application = createReactClass({
 			userID: null,
 			car: null,
 			reminder: null,
-			availabeCars: []
+			availableCars: [{ position: { lat: 52.26074, lng: 10.5266 }, Kennzeichen: 'PE-HA 68E', Ladezustand: 87 }, { position: { lat: 52.26336, lng: 10.3649 }, Kennzeichen: 'PE-HA 69E', Ladezustand: 51 }]
 		};
 	},
 
@@ -21778,8 +21778,6 @@ var Application = createReactClass({
 			null,
 			React.createElement(Menu, null),
 			React.createElement(Content, {
-				type: 'map',
-				id: 'content',
 				cars: this.state.availableCars })
 		);
 		return html;
@@ -21804,6 +21802,8 @@ var GoogleMapsLoader = require('google-maps');
 
 GoogleMapsLoader.KEY = 'AIzaSyBhaobI6vImnVVO4BksSOHkQJfcDynhuzs';
 
+var classPtr = null;
+
 var Content = createRectClass({
 	getInitialState: function getInitialState() {
 		return {
@@ -21812,6 +21812,7 @@ var Content = createRectClass({
 	},
 
 	componentDidMount: function componentDidMount() {
+		classPtr = this;
 		GoogleMapsLoader.load(function (google) {
 			var pos = { lat: 52.255, lng: 10.373 };
 			var map = new google.maps.Map(document.getElementById("map"), {
@@ -21824,12 +21825,27 @@ var Content = createRectClass({
 				map: map
 			});
 
-			this.setState({ map: map });
+			var state = { map: map };
+
+			classPtr.setState(state);
 		});
 	},
 
 	render: function render() {
 		var html = React.createElement('div', { id: 'map' });
+		var map = this.state.map;
+
+		if (map != null) {
+			console.log(this.props.cars);
+			this.props.cars.forEach(function (car, index, arr) {
+				var marker = new google.maps.Marker({
+					position: car.position,
+					map: map
+				});
+
+				marker.addListener('click', function () {});
+			});
+		}
 
 		return html;
 	}

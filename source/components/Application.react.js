@@ -9,7 +9,8 @@ var Application = createReactClass({
 			userID: null,
 			car: null,
 			reminder: null,
-			availabeCars: []
+			availableCars: [{position: {lat: 52.26074, lng: 10.5266}, Kennzeichen: 'PE-HA 68E', Ladezustand: 87},
+					{position: {lat: 52.26336, lng: 10.3649}, Kennzeichen: 'PE-HA 69E', Ladezustand: 51}]
 		}
 	},
 
@@ -17,8 +18,6 @@ var Application = createReactClass({
 		var html = <div>
 				<Menu />
 				<Content 
-					type="map" 
-					id="content" 
 					cars={this.state.availableCars} />
 			</div>;
 		return html;
