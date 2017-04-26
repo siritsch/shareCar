@@ -21831,9 +21831,14 @@ var Content = createRectClass({
 		});
 	},
 
+	bookcar: function bookcar() {
+		console.log('Fahrzeug gebucht');
+	},
+
 	render: function render() {
 		var html = React.createElement('div', { id: 'map' });
 		var map = this.state.map;
+		var classPtr = this;
 
 		if (map != null) {
 			console.log(this.props.cars);
@@ -21843,7 +21848,18 @@ var Content = createRectClass({
 					map: map
 				});
 
-				marker.addListener('click', function () {});
+				marker.addListener('click', function () {
+					var row1 = '<tr><td>Kennzeichen:</td><td>' + car.Kennzeichen + '</td></tr>';
+					var row2 = '<tr><td>Ladezustand:</td><td>' + car.Ladezustand + '</td></tr>';
+					var row3 = '<tr><td><button class=&quot;btn btn-default&quot; onclick={classPtr.bookcar();} >Buchen</button></td><td></td></tr>';
+					var table = '<table>' + row1 + row2 + row3 + '</table>';
+
+					var info = new google.maps.InfoWindow({
+						content: table
+					});
+
+					info.open(map, marker);
+				});
 			});
 		}
 
